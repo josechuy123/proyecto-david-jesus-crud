@@ -1,59 +1,125 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Sistema de ventas</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="js/usuarios.js"></script>
+    <title>Tarea de cobranzas</title>
 </head>
-
 <body>
-    <img class="wave" src="img/wave.png">
-    <div class="container">
-        <div class="img">
-            <img src="img/bg.svg">
-        </div>
-
-        <div class="login-content">
-            <form action="index.html">
-
-                <img src="img/avatar.svg">
-                <h2 class="title">Bienvenido</h2>
-
-                <div class="input-div one">
-
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-
-                    <div class="div">
-                        <h5>Usuario</h5>
-                        <input type="text" class="input">
-                    </div>
-
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="https://tresplazas.com/web/img/big_punto_de_venta.png" width="30" height="30" class="d-inline-block align-top" alt="">
+            Tarea de cobranzas Administrador
+        </a>
+    </nav>
+    <div style="margin: 1%;">
+        <div class="row">
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#clientes" role="tab" aria-controls="home">Clientes</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#add-cliente" role="tab" aria-controls="profile">Alta de usuarios</a>
                 </div>
-
-                <div class="input-div pass">
-                    <div class="i">
-                        <i class="fas fa-lock"></i>
-                    </div>
-
-                    <div class="div">
-                        <h5>Contraseña</h5>
-                        <input type="password" class="input">
-                    </div>
-
                 </div>
+                <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="clientes" role="tabpanel" aria-labelledby="list-home-list">
+                        <div class="card">
+                            <div class="card-header">
+                              Clientes
+                              <div style="float: right;">
+                                    <button class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar cliente</button>
+                              </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Listado de clientes</h5>
+                                <div id="clientes">
 
-                <a href="#">Olvidaste tu contraseña?</a>
-                <input type="submit" class="btn" value="Login">
-            </form>
-        </div>
-
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Telefono</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Ejemplo</th>
+                                            <td>Ejemplo</td>
+                                            <td>Ejemplo</td>
+                                            <td>
+                                                <button type="button"></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                  </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="add-cliente" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="card">
+                            <div class="card-header">
+                              Prueba
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Special title treatment</h5>
+                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
     </div>
-    <script type="text/javascript" src="js/main.js"></script>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input type="number" class="form-control" id="telefono" placeholder="Ingrese telefono">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Ingrese email">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Rol</label>
+                            <select id="rol" class="form-control">
+                                <option value="Administrador">Administrador</option>
+                                <option value="Cliente">Cliente</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="btnGuardarCliente">Guardar</button>
+                        <button type="reset" class="btn btn-danger" >Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
+<script src="js/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </html>
