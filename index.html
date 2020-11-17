@@ -7,7 +7,7 @@
     <script src="js/usuarios.js"></script>
     <title>Tarea de cobranzas</title>
 </head>
-<body>
+<body onload="lista_usuarios();" > 
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">
             <img src="https://tresplazas.com/web/img/big_punto_de_venta.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -46,15 +46,7 @@
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">Ejemplo</th>
-                                            <td>Ejemplo</td>
-                                            <td>Ejemplo</td>
-                                            <td>
-                                                <button type="button"></button>
-                                            </td>
-                                        </tr>
+                                    <tbody id="listar_usuarios">                                      
                                     </tbody>
                                   </table>
                             </div>
@@ -117,9 +109,9 @@
             </div>
         </div>
     </div>
-</body>
 <script src="js/app.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
 </html>
