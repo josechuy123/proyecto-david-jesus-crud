@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+class Usuarios 
+{
+
+    constructor(nombre, apellido, telefono)
+    {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono
+    }
+}
+
+ 
+
+let bd = {
+            usuarios: [],
+            direcciones:[]
+         }
+
+let storage = window.localStorage;
+
+
+bd.usuarios.push(new Usuarios("Cesar","Mora", "3121454705"));
+bd.usuarios.push(new Usuarios("David","Loredo", "3121434324"));
+
+storage.setItem("usuarios", JSON.stringify(bd.usuarios));
+
+
+
+const eliminarUsuario = telefono => {
+    let usuarios = JSON.parse(storage.getItem("usuarios"));
+
+    for(let i = 0; i< usuarios.length; i++)
+    {
+        if(usuarios[i].telefono == telefono)
+        {
+            usuarios.splice(i,1);
+        }
+    }
+
+    storage.setItem('usuarios',JSON.stringify(usuarios));
+
+}
+
+
+const editarUsuario = (telefono,usuario) => {
+    let usuarios = JSON.parse(storage.getItem("usuarios"));
+
+    for(let i = 0; i< usuarios.length; i++)
+    {
+        if(usuarios[i].telefono == telefono)
+        {
+            usuarios[i] = usuario
+        }
+    }
+
+    storage.setItem('usuarios',JSON.stringify(usuarios));
+
+}
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+let usuarios = JSON.parse(storage.getItem("usuarios"));
+
+for(let usuario of usuarios)
+{
+    console.log(usuario)
+}
+
+
+eliminarUsuario("3121454705")
+
+
+usuarios = JSON.parse(storage.getItem("usuarios"));
+
+
+console.log("-----------Despues de eliminar----------")
+for(let usuario of usuarios)
+{
+    console.log(usuario)
+}
+
+editarUsuario("3121434324", new Usuarios("Alejandro", "Rodriguez", "3121454705"))
+
+usuarios = JSON.parse(storage.getItem("usuarios"));
+console.log("-----------Despues de editar----------")
+for(let usuario of usuarios)
+{
+    console.log(usuario)
+}
+
+</script>
+
+</html>

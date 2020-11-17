@@ -18,13 +18,13 @@
         <div class="row">
             <div class="col-4">
                 <div class="list-group" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#clientes" role="tab" aria-controls="home">Clientes</a>
-                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#add-cliente" role="tab" aria-controls="profile">Alta de usuarios</a>
+                    <a class="list-group-item list-group-item-action " id="list-home-list" data-toggle="list" href="#clientes" role="tab" aria-controls="home">Clientes</a>
+                    <a class="list-group-item list-group-item-action active" id="list-profile-list" data-toggle="list" href="#add-cliente" role="tab" aria-controls="profile">Cantidad a cobrar</a>
                 </div>
                 </div>
                 <div class="col-8">
                     <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="clientes" role="tabpanel" aria-labelledby="list-home-list">
+                    <div class="tab-pane fade " id="clientes" role="tabpanel" aria-labelledby="list-home-list">
                         <div class="card">
                             <div class="card-header">
                               Clientes
@@ -39,10 +39,12 @@
                                 </div>
                                 <table class="table">
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align: center;">
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Telefono</th>
                                             <th scope="col">Email</th>
+                                            <th scope="col">ROL</th>
+                                            <th scope="col">Deuda</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
@@ -52,15 +54,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="add-cliente" role="tabpanel" aria-labelledby="list-profile-list">
+                    <div class="tab-pane fade show active" id="add-cliente" role="tabpanel" aria-labelledby="list-profile-list">
                         <div class="card">
                             <div class="card-header">
-                              Prueba
+                                Cantidad a cobrar
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <h5 class="card-title">Listado de clientes <button style="float: right;" onclick="abrirModalClientes()" class="btn btn-success">Cantidad a cobrar para todos</button> </h5>
+                                <br>
+                                <table class="table">
+                                    <thead>
+                                        <tr style="text-align: center;">
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Telefono</th>
+                                            <th scope="col">Deuda</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listar_usuarios_cobros">                                      
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -107,6 +120,51 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cantidad_cobrar_clientes_todos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar deuda a todos los clientes</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Deuda</label>
+                        <input type="number" class="form-control" id="deuda" placeholder="Deuda">
+                    </div>
+                    <button type="button" style="float: right;" class="btn btn-success" onclick="AgregarDeudaClientes()">Agregar deuda</button>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="cantidad_cobrar_cliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar deuda</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Deuda</label>
+                        <input type="number" class="form-control" id="deuda" placeholder="Deuda">
+                        <input type="hidden" id="telefono_c" value="">
+                    </div>
+                    <button type="button" style="float: right;" class="btn btn-success" onclick="AgregarDeudaCliente()">Agregar deuda</button>
+                </form>
+            </div>
+          </div>
         </div>
     </div>
 <script src="js/app.js"></script>
