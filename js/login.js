@@ -2,8 +2,8 @@ let bd = JSON.parse(localStorage.getItem("usuarios"));
 if (!bd || bd==undefined)
 {
     bd = { 
-           datos: [],
-        }
+        datos: [],
+    }
 }
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")); 
@@ -16,14 +16,12 @@ const login = () =>{
     if(telefono == "" || password == "")
         return alert("Llene todos los campos");
 
-    
     let usuario = authenticate(telefono, password);
     if (usuario == null) return;
 
     localStorage.setItem('auth',JSON.stringify(usuario));
     location.replace("index.html");
 }
-
 
 const authenticate = (telefono, password) => {
 
@@ -35,8 +33,6 @@ const authenticate = (telefono, password) => {
             return usuario;
     }
 
-
-
     alert("Credenciales incorrectas");
     return null;
 }
@@ -46,9 +42,6 @@ const checkAuth = () => {
 
     if( !(!usuario || usuario == null || typeof(usuario) == "undefined"))
         location.replace("index.html");
-
-    
 }
-
 
 let usuario = checkAuth();

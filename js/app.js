@@ -159,7 +159,6 @@ function AgregarDeudaCliente()
     location.replace("index.html");
 }
 
-
 const checkAuth = () => {
     let usuario = JSON.parse(localStorage.getItem("auth")); 
 
@@ -173,8 +172,6 @@ const showInfo = () => {
     document.getElementById("mainTitle").innerHTML = usuario.nombre
 }
 
-
 let usuario = checkAuth();
 
 showInfo();
-
