@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/deudor.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="js/usuarios.js"></script>
     <title>Tarea de cobranzas</title>
 </head>
 <body onload="lista_usuarios();" > 
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="https://tresplazas.com/web/img/big_punto_de_venta.png" width="30" height="30" class="d-inline-block align-top" alt="">
-            <p style="display: inline;" id="mainTitle">Tarea de cobranzas</p>
-        </a>
+    <nav>
+        <ul class="menu" style="text-align: center;">
+            <li class="logo">
+                <img src="https://tresplazas.com/web/img/big_punto_de_venta.png" width="50" height="50" style="display: inline;" alt="">
+                <a style="display: inline; color: white;" id="mainTitle">Tarea de cobranzas</a>
+            </li>
+            <li class="menu">
+                <button class="btn-danger">Cerrar sesión</button>
+            </li>
+        </ul>
     </nav>
     <div style="margin: 1%;">
         <div class="row">
@@ -29,7 +35,8 @@
                             <div class="card-header">
                               Clientes
                               <div style="float: right;">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar cliente</button>
+                                    <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar
+                                        cliente</button>
                               </div>
                             </div>
                             <div class="card-body">
