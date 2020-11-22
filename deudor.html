@@ -4,20 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/deudor.css">
+    <link rel="stylesheet" href="/css/estilo.css">
     <title>Vista deudor</title>
 </head>
 <body>
     <nav>
         <ul class="menu" style="text-align: center;">
             <li class="logo">
-                <a id="title_deudor">Deudor: </a>
+                <a id="title_deudor" style="color: aliceblue;">Deudor: </a>
             </li>
             <li class="menu">
-                <a>Cerrar sesión</a>
+                <button class="btn-danger" onclick="logout()" >Cerrar sesión</button>
             </li>
         </ul>
     </nav>
+    <div style="margin: 5%;">
+        <table class="table">
+            <thead>
+                <tr style="text-align:center">
+                    <th>Pago</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody id="info-cliente">
+                
+            </tbody>
+        </table>
+    </div>
 </body>
-<script src="js/auth.js"></script>
-<script src="js/login.js"></script>
+<script src="js/logout.js"></script>
+<script src="js/deudor.js"></script>
 </html>

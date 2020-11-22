@@ -1,14 +1,24 @@
 //let bd = { datos: [] }
 let bd = JSON.parse(localStorage.getItem("usuarios"));
+let pagos = JSON.parse(localStorage.getItem("pagos"));
 if (!bd || bd==undefined)
 {
     bd = { 
         datos: [],
     }
+    
+}
+if(!pagos || pagos==undefined)
+{
+    pagos = { 
+        pagos: [],
+    }
 }
 
 let listar_usuarios = document.getElementById("listar_usuarios");
 let listar_usuarios_cobros = document.getElementById("listar_usuarios_cobros");
+let filtro_cobros =document.getElementById("filtro_cobros");
+let listar_pagos = document.getElementById("listar_pagos");
 
 document.getElementById("btnGuardarCliente").addEventListener("click" , ()=> {
     let nombre = document.getElementById("nombre").value;
@@ -17,8 +27,9 @@ document.getElementById("btnGuardarCliente").addEventListener("click" , ()=> {
     let password = document.getElementById("password").value;
     let rol = document.getElementById("rol").value;
     let deuda = 0;
+    let deuda_cobros = 0;
 
-    let datos = new Usuarios(nombre,telefono,email,password,rol,parseInt(deuda));
+    let datos = new Usuarios(nombre,telefono,email,password,rol,parseInt(deuda),parseInt(deuda_cobros));
     bd.datos.push(datos);
 
     
@@ -31,42 +42,75 @@ document.getElementById("btnGuardarCliente").addEventListener("click" , ()=> {
 function lista_usuarios()
 {
     let usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    let pagos = JSON.parse(localStorage.getItem("pagos")); 
     listar_usuarios.innerHTML = "";
     listar_usuarios_cobros.innerHTML = "";
     if(usuarios!=null)
     {
         usuarios.datos.forEach(usuario => {
-            listar_usuarios.innerHTML+=`
-            
-            <tr style="text-align:center">
-                <th scope="row">${ usuario.nombre }</th>
-                <td>${ usuario.telefono }</td>
-                <td>${ usuario.email }</td>
-                <td>${ usuario.rol }</td>
-                <td>$${ usuario.deuda }</td>
-                <td>
-                    <button type="button" class="btn btn-primary" onclick="abrirModalCobroCliente(${ usuario.telefono })" >Agregar pago</button>
-                    <button type="button" class="btn btn-warning" onclick="abrirModalCliente(${ usuario.telefono })" >Agregar deuda</button>
-                    <button type="button" class="btn btn-danger" onclick=" eliminar(${ usuario.telefono }) " >Eliminar</button>
-                </td>
-            </tr>
-           
-            `
-            listar_usuarios_cobros.innerHTML+=`
-            
-            <tr style="text-align:center">
-                <th scope="row">${ usuario.nombre }</th>
-                <td>${ usuario.telefono }</td>
-                <td>$${ usuario.deuda }</td>
-                <td>
-                    <button type="button" class="btn btn-success" onclick="abrirModalCliente(${ usuario.telefono })" >Cantidad a cobrar</button>
-                </td>
-            </tr>
-           
-            `
+
+                if(usuario.rol == "Cliente")
+                {
+                    listar_usuarios.innerHTML+=`
+                
+                        <tr style="text-align:center">
+                            <th scope="row">${ usuario.nombre }</th>
+                            <td>${ usuario.telefono }</td>
+                            <td>${ usuario.email }</td>
+                            <td>${ usuario.rol }</td>
+                            <td>$${ usuario.deuda_cobros }</td>
+                            <td>$${ usuario.deuda }</td>
+                            <td>
+                                <button type="button" class="btn-primary" onclick="abrirModalCobroCliente(${ usuario.telefono })" >Agregar pago</button>
+                                <button type="button" class="btn-warning" onclick="abrirModalCliente(${ usuario.telefono })" >Agregar deuda</button>
+                                <button type="button" class="btn-danger" onclick=" eliminar(${ usuario.telefono }) " >Eliminar</button>
+                            </td>
+                        </tr>
+                
+                    `
+                    listar_usuarios_cobros.innerHTML+=`
+                
+                        <tr style="text-align:center">
+                            <th scope="row">${ usuario.nombre }</th>
+                            <td>$${ usuario.deuda_cobros }</td>
+                            <td>$${ usuario.deuda }</td>
+                            <td>
+                                <button type="button" class="btn-danger" onclick=" modalVerPagos(${ usuario.telefono }) "> Ver pagos </button>
+                            </td>
+                        </tr>
+                    
+                    `                 
+                }
         });    
          
     }  
+}
+
+function modalVerPagos(telefono)
+{
+    $("#telefono_pago").val(telefono)
+    $("#verPagos").modal("show");
+    let pagos = JSON.parse(localStorage.getItem("pagos"));  
+    listar_pagos.innerHTML = "";
+
+    if(pagos!=null)
+    {
+        pagos.pagos.forEach(pago => {
+            if(pago.telefono == telefono)
+            {
+                listar_pagos.innerHTML+=`
+            
+                    <tr style="text-align:center">
+                        <td>$${ pago.pago }</td>
+                        <td>${ pago.fecha }</td>
+                    </tr>
+            
+                `
+            }
+            
+        });    
+         
+    }
 }
 
 function eliminar(telefono)
@@ -94,6 +138,7 @@ function agregarCobroCliente()
 {
     let telefono = document.getElementById("telefono_cobro").value;
     let cobro = document.getElementById("cobro").value;
+    let fecha = document.getElementById("fecha_cobro").value;
     if(cobro <= 0 )
         return alert("Numero mayor a 0");
 
@@ -102,12 +147,44 @@ function agregarCobroCliente()
     usuarios.datos.forEach((usuario) => {
         if( usuario.telefono == telefono )
         {
+            let pago = new Pagos(telefono,parseInt(cobro), fecha);
+            console.log(pago);
+            pagos.pagos.push(pago);
+
+            localStorage.setItem("pagos" , JSON.stringify(pagos));
+
             usuario.deuda = parseInt(usuario.deuda)-parseInt(cobro);
         }
     });
 
     localStorage.setItem('usuarios',JSON.stringify(usuarios));
     location.replace("index.html");
+}
+
+function filtrar()
+{
+    let filtro_fecha = document.getElementById("filtro_fecha").value;
+    let pagos = JSON.parse(localStorage.getItem("pagos")); 
+    let usuarios = JSON.parse(localStorage.getItem("usuarios"));
+    filtro_cobros.innerHTML = "";
+    pagos.pagos.forEach(pago => {
+        usuarios.datos.forEach(usuario => {          
+            if(pago.fecha == filtro_fecha)
+            {
+                if(usuario.telefono == pago.telefono)
+                {
+                    filtro_cobros.innerHTML+=`
+                        <tr style="text-align:center">
+                            <td>${ usuario.nombre }</td>
+                            <td>${ pago.fecha }</td>
+                            <td>$${ pago.pago }</td>
+                        </tr>
+                    `
+                }
+                
+            }
+        });
+    });
 }
 
 function abrirModalClientes()
@@ -118,13 +195,16 @@ function abrirModalClientes()
 function AgregarDeudaClientes()
 {
     let deuda = document.getElementById("deuda_todo").value;
+
+    let cobros = JSON.parse(localStorage.getItem("cobros"));
+
     if(deuda <= 0 )
         return alert("Numero mayor a 0");
     let usuarios = JSON.parse(localStorage.getItem("usuarios")); 
     
     usuarios.datos.forEach((usuario) => {
         usuario.deuda = parseInt(usuario.deuda)+parseInt(deuda);
-        console.log(usuario.deuda)
+        usuario.deuda_cobros = parseInt(usuario.deuda_cobros)+parseInt(deuda);
     });
     
     localStorage.setItem('usuarios',JSON.stringify(usuarios));
@@ -151,7 +231,7 @@ function AgregarDeudaCliente()
         if( usuario.telefono == telefono )
         {
             usuario.deuda = parseInt(usuario.deuda)+parseInt(deuda);
-            console.log(usuario.deuda)
+            usuario.deuda_cobros = parseInt(usuario.deuda_cobros)+parseInt(deuda);
         }
     });
     
@@ -164,12 +244,13 @@ const checkAuth = () => {
 
     if( !usuario || usuario == null || typeof(usuario) == "undefined")
         location.replace("login.html");
-
+    if( usuario.rol != "Administrador" )
+        location.replace("deudor.html");
     return usuario
 }
 
 const showInfo = () => {
-    document.getElementById("mainTitle").innerHTML = usuario.nombre
+    document.getElementById("mainTitle").innerHTML += " " + usuario.nombre
 }
 
 let usuario = checkAuth();

@@ -4,6 +4,18 @@ if (!bd || bd==undefined)
     bd = { 
         datos: [],
     }
+    var admin = {
+        nombre: "Admin",
+        telefono: "0000000000",
+        correo: "admin@ucol.mx",
+        password: "1234",
+        deuda: 0,
+        deuda_cobros: 0,
+        pago: 0,
+        rol: "Administrador",
+    };
+    bd.datos.push(admin);
+    localStorage.setItem("usuarios",JSON.stringify(bd));
 }
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios")); 
@@ -20,7 +32,10 @@ const login = () =>{
     if (usuario == null) return;
 
     localStorage.setItem('auth',JSON.stringify(usuario));
-    location.replace("index.html");
+    if(usuario.rol == "Administrador")
+        location.replace("index.html");
+    else
+        location.replace("deudor.html")
 }
 
 const authenticate = (telefono, password) => {
@@ -32,7 +47,6 @@ const authenticate = (telefono, password) => {
         if( usuario.telefono == telefono && usuario.password == password)
             return usuario;
     }
-
     alert("Credenciales incorrectas");
     return null;
 }
@@ -40,8 +54,14 @@ const authenticate = (telefono, password) => {
 const checkAuth = () => {
     let usuario = JSON.parse(localStorage.getItem("auth")); 
 
-    if( !(!usuario || usuario == null || typeof(usuario) == "undefined"))
-        location.replace("index.html");
+    if( (!(!usuario || usuario == null || typeof(usuario) == "undefined")) )
+    {
+        if(usuario.rol == "Administrador")
+            location.replace("index.html");
+        else
+            location.replace("deudor.html")
+    }
+        
 }
 
 let usuario = checkAuth();

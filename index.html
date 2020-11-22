@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/deudor.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/estilo.css">
     <script src="js/usuarios.js"></script>
     <title>Tarea de cobranzas</title>
 </head>
@@ -16,7 +16,7 @@
                 <a style="display: inline; color: white;" id="mainTitle">Tarea de cobranzas</a>
             </li>
             <li class="menu">
-                <button class="btn-danger">Cerrar sesión</button>
+                <button class="btn-danger" onclick="logout()" >Cerrar sesión</button>
             </li>
         </ul>
     </nav>
@@ -26,6 +26,7 @@
                 <div class="list-group" id="list-tab" role="tablist">
                     <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#clientes" role="tab" aria-controls="home">Clientes</a>
                     <a class="list-group-item list-group-item-action " id="list-profile-list" data-toggle="list" href="#add-cliente" role="tab" aria-controls="profile">Cantidad a cobrar</a>
+                    <a class="list-group-item list-group-item-action " id="list-profile-list" data-toggle="list" href="#filtrar" role="tab" aria-controls="profile">Filtrar</a>
                 </div>
                 </div>
                 <div class="col-8">
@@ -35,12 +36,12 @@
                             <div class="card-header">
                               Clientes
                               <div style="float: right;">
-                                    <button class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar
+                                    <button class="btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar
                                         cliente</button>
                               </div>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Listado de clientes <button style="float: right;" onclick="abrirModalClientes()" class="btn btn-success">Cantidad a cobrar para todos</button></h5>
+                                <h5 class="card-title">Listado de clientes <button style="float: right;" onclick="abrirModalClientes()" class="btn-success">Cantidad a cobrar para todos</button></h5>
                                 <br>
 
                                 <div id="clientes">
@@ -54,6 +55,7 @@
                                             <th scope="col">Email</th>
                                             <th scope="col">ROL</th>
                                             <th scope="col">Deuda</th>
+                                            <th scope="col">Deuda total</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
@@ -69,18 +71,43 @@
                                 Cantidad a cobrar
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">Listado de clientes <button style="float: right;" onclick="abrirModalClientes()" class="btn btn-success">Cantidad a cobrar para todos</button> </h5>
+                                <h5 class="card-title">Listado de clientes </h5>
                                 <br>
                                 <table class="table">
                                     <thead>
                                         <tr style="text-align: center;">
                                             <th scope="col">Nombre</th>
-                                            <th scope="col">Telefono</th>
                                             <th scope="col">Deuda</th>
-                                            <th scope="col">Acciones</th>
+                                            <th scope="col">Deuda total</th>
+                                            <th scope="col">Accion</th>
                                         </tr>
                                     </thead>
                                     <tbody id="listar_usuarios_cobros">                                      
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="filtrar" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="card">
+                            <div class="card-header">
+                                Filtrar
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Listado de clientes </h5>
+                                <br>
+                                <input type="date" class="form-group" id="filtro_fecha" >
+                                <button class="btn-success" onclick=" filtrar(); " > Filtrar </button>
+                                <br>
+                                <table class="table">
+                                    <thead>
+                                        <tr style="text-align: center;">
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Cobro</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filtro_cobros">                                      
                                     </tbody>
                                 </table>
                             </div>
@@ -120,12 +147,12 @@
                         <div class="form-group">
                             <label for="password">Rol</label>
                             <select id="rol" class="form-control">
-                                <option value="Administrador">Administrador</option>
                                 <option value="Cliente">Cliente</option>
+                                <option value="Administrador">Administrador</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-primary" id="btnGuardarCliente">Guardar</button>
-                        <button type="reset" class="btn btn-danger" >Cancelar</button>
+                        <button type="button" class="btn-primary" id="btnGuardarCliente">Guardar</button>
+                        <button type="reset" class="btn-danger" >Cancelar</button>
                     </form>
                 </div>
             </div>
@@ -147,7 +174,7 @@
                         <label for="exampleInputEmail1">Deuda</label>
                         <input type="number" class="form-control" id="deuda_todo" placeholder="Deuda">
                     </div>
-                    <button type="button" style="float: right;" class="btn btn-success" onclick="AgregarDeudaClientes()">Agregar deuda</button>
+                    <button type="button" style="float: right;" class="btn-success" onclick="AgregarDeudaClientes()">Agregar deuda</button>
                 </form>
             </div>
           </div>
@@ -170,7 +197,7 @@
                         <input type="number" class="form-control" id="deuda" placeholder="Deuda">
                         <input type="hidden" id="telefono_c" value="">
                     </div>
-                    <button type="button" style="float: right;" class="btn btn-success" onclick="AgregarDeudaCliente()">Agregar deuda</button>
+                    <button type="button" style="float: right;" class="btn-success" onclick="AgregarDeudaCliente()">Agregar deuda</button>
                 </form>
             </div>
           </div>
@@ -188,18 +215,51 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
+                    <div style="margin-bottom: 1rem;">
                         <label for="cobro">Cobro</label>
                         <input type="number" class="form-control" id="cobro" placeholder="Cobro">
                         <input type="hidden" id="telefono_cobro" value="">
                     </div>
-                    <button type="button" style="float: right;" class="btn btn-success" onclick="agregarCobroCliente()">Agregar cobro</button>
+                    <div style="margin-bottom: 1rem;">
+                        <input type="date" id="fecha_cobro" class="form-control" value="">
+                    </div>
+                    <button type="button" style="float: right;" class="btn-success" onclick="agregarCobroCliente()">Agregar cobro</button>
                 </form>
             </div>
           </div>
         </div>
     </div>
 
+    <div class="modal fade" id="verPagos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ver cobros</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="telefono_pago" value="">
+                <div style="margin-bottom: 1rem;">
+                    <br>
+                    <table class="table">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th scope="col">Pago</th>
+                                <th scope="col">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listar_pagos">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+<script src="js/logout.js"></script>
 <script src="js/app.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
